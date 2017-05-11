@@ -28,7 +28,7 @@ def login():
 
     state = s.dumps(state_data)
 
-    url = reddit.auth.url(['identity'], state, 'permanent')
+    url = reddit.auth.url(['identity'], state, 'temporary')
 
     return render_template('auth/login.html', url=url, title='Log in')
 
@@ -70,9 +70,11 @@ def login_callback():
         else:
             return redirect(url_for('.login'))
 
-    refresh_token = reddit.auth.authorize(request.args.get('code'))
+    reddit.auth.authorize(request.args.get('code'))
 
-    user = authenticate_user(reddit.user.me())
+    user = authenticate_user(reddit.user.me(False))
+
+    reddit.read_only = True
 
     if login_user(user, remember=True):
         flash('Logged in!', category='success')
