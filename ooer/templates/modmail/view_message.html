@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% from 'modmail/macros.html' import render_header, render_message %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modmail.css') }}">
+{% endblock %}
+
+{% macro render_author(author, distinguished=None) %}
+  {% if author.name == '[deleted]' %}
+    [deleted]
+  {% else %}
+    <a
+        href="https://www.reddit.com/u/{{ author.name }}"
+        class="{% if distinguished == 'admin' %}bg-danger text-white{% elif distinguished == 'moderator' %}bg-success text-white{% elif author in moderators %}text-success{% endif %}"
+    >u/{{ author.name }}</a>
+  {% endif %}
+{% endmacro %}
+
+{% block content %}
+  {{ render_header(message.subject, message.author) }}
+  {% for message in [message] + message.replies %}
+    {% call render_message(message.body_html) %}
+      {{ render_author(message.author, message.distinguished) }}
+      to
+      {% if message.dest.__class__.__name__ == 'Subreddit' %}
+        <a href="https://www.reddit.com/r/{{ message.dest.display_name }}">r/{{ message.dest.display_name }}</a>
+      {% else %}
+        {{ render_author(message.dest) }}
+      {% endif %}
+      &middot;
+      {{ message.created|humanize }}
+    {% endcall %}
+  {% endfor %}
+{% endblock %}

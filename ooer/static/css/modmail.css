@@ -1,0 +1,21 @@
+.md blockquote:last-child,
+.md p:last-child,
+.md pre:last-child {
+  margin-bottom: 0;
+}
+
+.md blockquote {
+  font-size: inherit;
+  background-color: #f5f5f5;
+  border-left-color: #ccc;
+}
+
+.md p {
+  word-wrap: break-word;
+  word-break: keep-all;
+}
+
+.md sup {
+  vertical-align: super;
+  top: initial;
+}

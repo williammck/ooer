@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% macro render_author(author) %}
+  {% if author.name == '[deleted]' %}
+    [deleted]
+  {% else %}
+    <a
+        href="https://www.reddit.com/u/{{ author.name }}"
+        class="{% if author.is_admin %}text-danger{% elif author.is_subreddit_mod or author in moderators %}text-success{% endif %}"
+    >u/{{ author.name }}</a>
+  {% endif %}
+{% endmacro %}
+
+{% block content %}
+  <h2>best of modmail</h2>
+  <p class="lead">oman under construcccctionn</p>
+{% endblock %}
+
+{% block content_hidden %}
+  <h2>best of modmail</h2>
+  <h3>new modmail</h3>
+  {% for conversation in conversations %}
+    <p>
+      <strong>
+        <a href="{{ url_for('.view_conversation', conversation_id=conversation.id) }}">{{ conversation.subject }}</a>
+      </strong>
+      <br>
+      <small>
+        {% if conversation.participant and not conversation.participant.is_op and conversation.participant.is_participant %}
+          to: {{ render_author(conversation.participant) }}
+        {% endif %}
+        by:
+        {% set authors = conversation.authors|unique %}
+        {% for author in authors[:3] %}
+          {{ render_author(author) }}
+          {% if not loop.last %}
+            &middot;
+          {% endif %}
+        {% endfor %}
+        {% if authors|length > 3 %}
+          &middot;
+          <em>and more!</em>
+        {% endif %}
+      </small>
+    </p>
+  {% endfor %}
+  <h3>old modmail</h3>
+  {% for message in messages %}
+    <p>
+      <strong>
+        <a href="{{ url_for('.view_message', message_id=message.id) }}">{{ message.subject }}</a>
+      </strong>
+      <br>
+      {% if message.author %}
+        <small>from: {{ render_author(message.author) }}</small>
+      {% endif %}
+    </p>
+  {% endfor %}
+{% endblock %}

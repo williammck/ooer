@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }} - {% endif %}ooer.lol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% if not session['css_disabled'] %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    {% endif %}
+    {%- block css %}
+    {%- endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top site-navbar" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#siteNav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('standalone.index') }}">ooer.lol</a>
+        </div>
+        <div class="collapse navbar-collapse" id="siteNav">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/forums/sso">
+                forums
+              </a>
+            </li>
+            <li{% if request.blueprint == 'best_of_modmail' %} class="active"{% endif %}>
+              <a href="{{ url_for('best_of_modmail.index') }}">
+                best of modmail
+                {% if request.blueprint == 'best_of_modmail' %}
+                  <span class="sr-only">(current)</span>
+                {% endif %}
+              </a>
+            </li>
+            {% if current_user.is_authenticated %}
+              <li class="dropdown{% if request.blueprint == 'auth' %} active{% endif %}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  {{ current_user.username }}
+                  {% if request.blueprint == 'auth' %}
+                    <span class="sr-only">(current)</span>
+                  {% endif %}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a href="{{ url_for('auth.logout') }}">log out</a>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li{% if request.blueprint == 'auth' %} class="active"{% endif %}>
+                <a href="{{ url_for('auth.login') }}">
+                  log in
+                  {% if request.blueprint == 'auth' %}
+                    <span class="sr-only">(current)</span>
+                  {% endif %}
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="page-content container">
+      {%- with messages = get_flashed_messages(with_categories=true) %}
+      {%- if messages %}
+      {%- for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ message }}
+      </div>
+      {%- endfor %}
+      {%- endif %}
+      {%- endwith %}
+      {%- block content %}
+      {%- endblock %}
+    </div>
+    <a href="{{ url_for_css(session['css_disabled']) }}" class="btn btn-primary btn-lg btn-block" style="border: none; border-radius: 0;">
+      {% if session['css_disabled'] %}enable{% else %}disable{% endif %} css
+    </a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {%- block javascript %}
+    {%- endblock %}
+  </body>
+</html>

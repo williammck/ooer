@@ -1,0 +1,15 @@
+SECRET_KEY = ''
+
+MONGODB_DB = 'ooer'
+
+FORUMS_SSO_CLIENT_ID = ''
+FORUMS_SSO_SECRET = ''
+
+# Reddit Link Bot/Settings
+REDDIT_BOT_CLIENT_ID = ''
+REDDIT_BOT_CLIENT_SECRET = ''
+REDDIT_BOT_USERNAME = 'OoerBot'
+REDDIT_BOT_PASSWORD = ''
+REDDIT_CLIENT_ID = ''
+REDDIT_CLIENT_SECRET = ''
+REDDIT_REDIRECT_URI = 'https://ooer.lol/login/callback'

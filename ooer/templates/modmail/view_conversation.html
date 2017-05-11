@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% from 'modmail/macros.html' import render_header, render_message %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modmail.css') }}">
+{% endblock %}
+
+{% block content %}
+  {{ render_header(conversation.subject, conversation.user) }}
+  {% for message in conversation.messages %}
+    {% call render_message(message.body) %}
+      <a
+          href="https://www.reddit.com/u/{{ message.author.name }}"
+          class="{% if message.author.is_admin %}text-danger{% elif message.author.is_subreddit_mod %}text-success{% endif %}"
+      >u/{{ message.author.name }}</a>
+      &middot;
+      {{ message.date|humanize }}
+      {% if message.author.is_hidden %}
+        &middot;
+        <small>[sent as /r/Ooer]</small>
+      {% endif %}
+      {% if message.is_internal %}
+        &middot;
+        <small>[for mods only]</small>
+      {% endif %}
+    {% endcall %}
+  {% endfor %}
+{% endblock %}

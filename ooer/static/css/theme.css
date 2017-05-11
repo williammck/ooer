@@ -1,0 +1,66 @@
+/*------------------------------------------------
+
+  Ooer.lol CSS
+  Bringing beautiful to your browser
+    since the Industrial Revolution.
+  The collaborative effort of:
+  /u/Ooer, /u/thelethalkind, /u/Wisey,
+    and /u/williammck
+
+  Transplanted from /r/Ooer
+
+------------------------------------------------*/
+
+/* Begin custom cursor */
+* {
+   cursor: url('../img/sock1.png'), auto;
+}
+/* End custom cursor */
+
+/* Begin text styling */
+body {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  background-color: #FFB057 !important;
+  background-image: url('../img/bbc.png');
+  content: "oh man i am not good with computer plz to help";
+  text-transform: uppercase;
+}
+h1 {
+  color: green !important;
+  text-align: center;
+}
+p {
+  font-family: "Courier New", monospace !important;
+  background: yellow;
+  border: 20px solid blue;
+}
+.md p {
+  font-family: "Arial", sans-serif !important;
+  font-size: 25px;
+}
+/* End text styling */
+
+/* Begin header styling */
+.navbar {
+  background-color: #FF00FF !important;
+}
+/* End header styling */
+
+/* Begin OH MAN */
+p:after {
+  content: "oh man i am not good with computer plz to help";
+}
+a:after {
+  content: "oh man i am not good with computer plz to help";
+}
+/* End OH MAN */
+
+/*------------------------------------------------------
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+BIG DOG = BEST DOG BIG DOG = BEST DOG BIG DOG = BEST DOG
+-------------------------------------------------------*/

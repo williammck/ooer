@@ -1,0 +1,25 @@
+{% macro render_header(subject, user) %}
+  <h2>best of modmail</h2>
+  <h3>{{ subject }}</h3>
+  {% if user %}
+    <p>
+      <em>
+        a conversation with
+        <a href="https://www.reddit.com/u/{{ user.name }}">
+          u/{{ user.name }}
+        </a>
+      </em>
+    </p>
+  {% endif %}
+{% endmacro %}
+
+{% macro render_message(body) %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{ caller() }}
+    </div>
+    <div class="panel-body">
+      {{ body|replace('<a href="/', '<a href="https://www.reddit.com/')|safe }}
+    </div>
+  </div>
+{% endmacro %}
